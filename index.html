@@ -1,0 +1,739 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel=stylesheet type=text/css href=build/app.css />
+    <link rel=stylesheet type=text/css href=build/jspm_packages/github/components/highlightjs@8.5.0/styles/sunburst.css />
+
+    <script src=build/jspm_packages/system.js></script>
+    <script src=config.js></script>
+    <script>System.import('init')</script>
+  </head>
+  <body class=loading>
+    <aside>
+      <ul></ul>
+    </aside>
+
+    <section class="intro">
+      <div class="warning">
+        <img alt="Mr. T" src=img/mr-t.png>
+        <div class=hey-suckah>
+          Sorry SUCKAH, this website works way best in Chrome.<br>
+          It uses web ANIMATIONS you damn fool.<br>
+          Those ain't supported in your FOOL browser.
+        </div>
+      </div>
+      <header data-markdown>
+        ![vb](img/vb.gif)
+
+        ![lights](img/lights.gif)
+
+        LNUG talk ![microphone](img/microphone.gif) May 27th 1998 - ~~James Pike~~ Mr Friend
+      </header>
+      <div data-markdown>
+        # Build systems for the web and node.js / io.js
+
+        Current javascript state of the art compared to sigh, a functional reactive declarative build automation system.
+      </div>
+      <footer data-markdown>
+        ![waving](img/uk-waving.gif)
+        ![geocities](img/geocities.gif)
+        <table border=6><tr><td>
+          [email coolguy82@hotmail.com](http://chilon.net)
+        </td></tr></table>
+        Press ⇨ to go forward, ⇦ to go back, f for fullscreen.
+      </footer>
+    </section>
+
+    <section class="what-is">
+      <div data-markdown>
+        Wikipedia: "In computing, a pipeline is a set of data processing elements connected in series, where the output of one element is the input of the next one."
+
+        * How to build code:
+          * Task runner
+          * Asset pipeline
+          * Build automation system
+        * Good for anything that reacts to code changes
+          * Transpile es6/coffee/typescript/scss.
+          * Run tests after everything is built.
+          * Create production version of code (minified etc.)
+          * Talks to your browser via livereload.
+          * Incrementally rebuild.
+      </div>
+    </section>
+
+    <section class="history">
+      <div data-markdown>
+        # History
+
+        * node 0.0.1 - May 2009.
+        * CoffeeScript 0.1 - December 2009.
+        * npm 0.0.1 - January 2010 (node at 0.1).
+          * ... and Simon Cowell leaves American Idol
+        * jake 0.1.5 - August 2010.
+        * CoffeeScript 1.0 - December 2010.
+        * npm 1.0.1 - April 2011 (node at 0.4)
+        * grunt 0.1.0 - January 2012.
+        * gulp 0.0.1 - July 2013, 1.0.0 - September.
+        * traceur 0.0.10 - January 2014.
+        * broccoli (first beta) - Feb 2014.
+      </div>
+    </section>
+
+    <section class="before-grunt">
+      <div data-markdown>
+        # Before grunt
+
+        * Gnu make: Makefile (gruntfile.js, gulpfile.js etc.)
+        * jake
+        * Shell scripts
+        * Custom build scripts written in javascript
+        * Other stuff
+      </div>
+    </section>
+
+    <section class="Makefiles">
+      <header>Makefile syntax</header>
+      <div data-seq=1- class=console>
+        <span data-blink=500>❯</span> touch  <img alt="Mr. T" src=img/mr-t.png>
+      </div>
+      <div>
+        <pre><code>
+<img alt="happy kitten" src=img/happy-kitten.jpg> <img alt="poop" src=img/poop.jpg><span class=colon>:</span> <img alt="sad kitten" src=img/sad-kitten.jpg>
+    @echo feeding lovely sad cat
+    feed --animal $^
+
+<img alt="A-Team" src=img/a-team.png><span class=colon>:</span> <img alt="Mr. T" src=img/mr-t.png><span class=hey-suckah data-seq=2-3>Nobody INTERFERES
+with Mr T or Mr T's
+BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimus Prime" src=img/optimus-prime.png> <img alt="She Ra" src=img/she-ra.jpg>
+    cat $^ > $@
+
+<img alt="pipe bomb" src=img/pipe-bomb.png><span class=colon>:</span> <img alt="A-Team" src=img/a-team.png> <img alt="happy kitten" src=img/happy-kitten.jpg> <img alt=poop src=img/poop.jpg> <img alt=gum src=img/gum.jpg> <img alt=ajax src=img/ajax.png>
+    @mplayer inspirational-montage.mkv
+        </pre></code>
+      </div>
+    </section>
+
+    <section class="jake">
+      <header>
+        <img class=jake src=img/jake.png>
+        <img class=mr-t data-seq=1- alt="Mr. T" src=img/mr-t.png>
+        <div data-seq=2 data-marquee=-90px:10px:5000 class=hey-suckah>
+          Hey SUCKAH.
+          Remember kids this hat 'aint red.
+          And don't you COME in to MY GARAGE
+          at NIGHT and KICK over MY BINS.
+        </div>
+      </header>
+      <div data-markdown>
+        ## Jake
+
+        * Jake could do pretty much everything make could.
+        * Much more powerful/flexible task scheduling than grunt.
+        * Never caught on, maybe due to lack of plugin system?
+      </div>
+    </section>
+
+    <section class="oh-grunt">
+      <div data-markdown>
+        ## Grunt
+        ```javascript
+        module.exports = function(grunt) {
+          grunt.initConfig({
+            jshint: {
+              files: ['**/*.js'],
+              options: JSON.parse(require('fs').readFileSync('./.jshintrc'))
+            }
+          })
+          grunt.loadNpmTasks('grunt-contrib-jshint')
+        }
+        ```
+        <div class=console>
+          <span data-blink=500>❯</span> grunt jshint
+        </div>
+
+        ## npm
+        ```javascript
+        "scripts": {
+          "lint": "jshint **/*.js"
+        }
+        ```
+        <div class=console>
+          <span data-blink=500>❯</span> npm lint
+        </div>
+      </div>
+    </section>
+
+    <section class="oh-grunt-2">
+      <div data-markdown data-seq=-1>
+        ## Can schedule tasks to run after current task
+        ```javascript
+        // i cannot ride the catbus like this!!!
+        grunt.registerTask('ride-catbus', function() {
+          var done = this.async()
+
+          grunt.task.run(['wait-at-bus-stop', 'give-totoro-umbrella'])
+
+          console.log('Where are you totoro?')
+          setTimeout(function() {
+            console.log('Totoro... Did I do something wrong???')
+            done()
+            // after this function exits the tasks are run
+          }, 10000)
+        })
+        ```
+
+        Not before or during current task. ~~That would be wrong.~~
+      </div>
+      <div data-markdown data-seq=1>
+        ## A task can schedule other tasks in sequence
+        ```javascript
+        // i just need to write another task to ride the catbus
+        grunt.registerTask('get-on-catbus', function() {
+          // ...
+        })
+
+        grunt.registerTask('ride-catbus', [
+          'wait-at-bus-stop',
+          'give-totoro-umbrella',
+          'get-on-catbus'
+        ])
+        ```
+      </div>
+    </section>
+
+    <section class="oh-grunt-3">
+      <div data-markdown>
+        * No release for 11 months.
+        * Is a task runner rather than a build system.
+          * It was just used as one.
+          * Because nobody seemed to like jake.
+          * And there was nothing else.
+        * Pipeline = plugins taking turns to compile code in temp directories.
+        * yeoman angular fullstack generator "best practice" gruntfile, 667 lines long:
+      </div>
+      <link rel=import href=gruntfile.js.html />
+    </section>
+
+    <section class="gulp">
+      <div data-markdown>
+        # Gulp
+
+        * gulp was released 1.5yrs after grunt in July 2013
+        * pipelines are node streams
+        * plugins are (mostly) stream transforms, 1 source file in 1 destination file out.
+        * The streams are exposed directly to build files.
+      </div>
+    </section>
+
+    <section class="oh-gulp">
+      <div data-markdown>
+        ```javascript
+        // gulpfile.js
+        var gulp       = require('gulp')
+        var traceur    = require('gulp-traceur')
+        var sourcemaps = require('gulp-sourcemaps')
+        var concat     = require('gulp-concat')
+        var merge      = require('merge-stream')
+
+        var paths = {
+          es6: ['app/**/*.js'],
+          raw: ['raw/*.js']
+        }
+
+        gulp.task('client-scripts', function() {
+          merge(
+            gulp.src(paths.es6)
+              .pipe(sourcemaps.init())
+              .pipe(traceur()),
+            gulp.src(paths.raw)
+              .pipe(sourcemaps.init())
+          )
+          .pipe(concat('output.js'))
+          .pipe(sourcemaps.write())
+          .pipe(gulp.dest('dist/assets'))
+        })
+
+        gulp.task('watch', function() {
+          gulp.watch(paths.es6.concat(paths.raw), ['client-scripts'])
+        })
+
+        gulp.task('default', ['client-scripts', 'watch'])
+        ```
+      </div>
+    </section>
+
+    <section class="oh-gulp-2">
+      <!-- PIPES -->
+      <div data-markdown>
+        * ... that naive gulpfile is not good:
+          * No incremental rebuilds.
+          * Invalid source map.
+          * Need to restart gulp on error.
+        * Concatenating source maps doesn't always work.
+        * Streams transforms are built around transforming files 1:1
+          * n:n/1:n/n:1 transforms more difficult.
+        * Node stream API not so good for this task:
+          * Node streams stop accepting incoming data on first error.
+          * gulp-plumber plugin needed to monkey patch it.
+      </div>
+    </section>
+
+    <section class="oh-gulp-3">
+      <header>
+        <img data-marquee="-50px:200px:5000" alt="jo liss on gulp" src=img/ibelieve.jpg />
+      </header>
+      <div>
+        <img data-marquee data-blink alt=facepalm src=img/facepalm.jpg />
+      </div>
+      <footer data-markdown>
+        * Need to use three plugins to get incremental rebuilds.
+          * gulp-cached : only pass through changed files.
+            * There is also gulp-changed / gulp-newer.
+          * gulp-remember: to allow cache to work with many:1 plugins.
+          * gulp-order: To maintain file order.
+      </footer>
+    </section>
+
+    <section class="oh-gulp-4">
+      <div data-markdown>
+        ```javascript
+        // gulpfile.js
+        var gulp       = require('gulp')
+        var traceur    = require('gulp-traceur')
+        var sourcemaps = require('gulp-sourcemaps')
+        var concat     = require('gulp-concat')
+        var merge      = require('merge-stream')
+
+        // these are needed for incremental rebuilds
+        var cache      = require('gulp-cached')
+        var remember   = require('gulp-remember')
+        var order      = require('gulp-order')
+
+        // this is needed to fix bad stream behaviour
+        var plumber    = require('gulp-plumber')
+
+        var paths = {
+          es6: ['app/**/*.js'],
+          raw: ['raw/*.js']
+        }
+        var allPaths = paths.es6.concat(paths.raw)
+
+        gulp.task('client-scripts', function() {
+          merge(
+            gulp.src(paths.es6)
+              .pipe(sourcemaps.init())
+              .pipe(plumber())
+              .pipe(cache('traceurCode'))
+              .pipe(traceur()),
+            gulp.src(paths.raw)
+              .pipe(sourcemaps.init())
+          )
+          .pipe(remember('traceurCode'))
+          .pipe(order(allPaths))
+          .pipe(concat('output.js'))
+          .pipe(sourcemaps.write())
+          .pipe(gulp.dest('dist/assets'))
+        })
+
+        gulp.task('watch', function() {
+          gulp.watch(allPaths, ['client-scripts'])
+        })
+
+        gulp.task('default', ['client-scripts', 'watch'])
+        ```
+      </div>
+    </section>
+
+    <section class="broccoli">
+      <header data-seq=1>
+        <img alt="Mr. T" src=img/mr-t.png>
+        <div class=hey-suckah>
+          Mr T recommends you EAT your BROCCOLI SUCKAH.<br>
+          Mr T also RECOMMENDS you stay AWAY<br>
+          from Mr T's BINS and Mr T's VAN.
+        </div>
+      </header>
+      <div data-markdown>
+        # Broccoli
+
+        * First release May 2013
+        * Currently in beta
+        * Plugins take one or more trees (filesystem directories).
+        * Output one or more trees (containing built assets).
+        * "The filesystem is the API"
+      </div>
+    </section>
+
+    <section class="broccoli-2">
+      <div data-markdown>
+        # That example from earlier in broccoli
+
+        ```javascript
+        var funnel        = require('broccoli-funnel')
+        var mergeTrees    = require('broccoli-merge-trees')
+        var es6Transpiler = require('broccoli-babel-transpiler')
+        var concat        = require('broccoli-concat')
+
+        var es6Tree = funnel('app', {
+          destDir: 'es6',
+          include: [ /\.js$/ ]
+        })
+        var es6TranspiledTree = esTranspiler(es6Tree)
+
+        var rawJsTree = funnel('raw', {
+          destDir: 'raw',
+          include: [ /\.js$/ ]
+        })
+
+        var allJsTree = mergeTrees([ es6TranspiledTree, rawJsTree ])
+
+        var concatTree = concat(allJsTree, {
+          // ensure raw files concatted after es6 files
+          inputFiles: [ 'es6/*', 'raw/*' ],
+          outputFile: 'dist/assets/output.js'
+        })
+
+        module.exports = concatTree
+        ```
+      </div>
+    </section>
+
+    <section class="oh-broccoli">
+      <div data-markdown>
+        # But...
+
+        * Source maps rarely working.
+          * Not working in previous example.
+          * Many plugins lack transitive application.
+        * Use of filesystem means plugins must clean-up.
+        * "No parallelism"
+          * "Only a 40% speed gain."
+          * Possible but "broccoli's primitives + helper code encourage deterministic sequential code patterns."
+        * Brocfile.js files can get verbose.
+      </div>
+    </section>
+
+    <section class="jspm">
+      <div data-markdown>
+        # jspm
+
+        * Based on EcmaScript 6 module loader.
+        * Gives you everything browserify + bower does and more.
+          * `jspm install bower:lodash`
+          * `jspm install github:bluebird`
+          * `jspm install npm:totoro-love-helper`
+        * Can load AMD/CommonJS and EcmaScript 6 modules.
+        * Can load/transpile dependencies at **run-time**.
+        * ... or can prepare self-contained bundles.
+      </div>
+    </section>
+
+    <section class="oh-jspm">
+      <div data-markdown>
+        * Have/Get to use ES6 modules + ES6 transpiler in your code:
+        ```javascript
+        import _ from 'lodash'
+        import { promisify } from 'bluebird'
+        ```
+        * In development mode modules will be transpiled many times:
+          * Each time browser reloads.
+          * During tests (once per browser + reload).
+        * Modules are transpiled one by one:
+          * Delaying page load.
+          * High CPU usage.
+          * Janking main JavaScript thread.
+        * "Bundle" builds slow, not incrementally rebuilt.
+          * Can use jspm + sigh together for this.
+      </div>
+    </section>
+
+    <section class="the-rest">
+      <div data-markdown>
+        # Other build systems
+
+        * metalsmith
+        * gobble
+        * brunch
+
+        ## Those without changes in 6+ months.
+        * plumber
+        * cha
+        * grunt
+      </div>
+    </section>
+
+    <section class="moaning">
+      <div data-markdown>
+        # Problems with most things
+
+        * You make a change while the tests are running and:
+          * Change is ignored.
+          * Waits until tests have finished then runs them again.
+        * Production source maps.
+        * Need special handling for watching files.
+      </div>
+    </section>
+
+    <section class="sigh-1">
+      <div data-markdown>
+        # sigh
+
+        * Functional Reactive Programming
+          * Like lodash of streams (flatten, reduce etc.)
+        * `n:n` / `1:n` / `1:1` operations: stream payload is array of events.
+        * Can switch between sequential/parallel easily.
+        * Does not use fs except when absolutely necessary.
+        * Provides lovely APIs for plugin writers
+          * Working with processes.
+          * Working with source maps (application, concatenation).
+        * Source maps from minified/transpiled files back to original sources.
+        * Very neat Assetfile.js syntax.
+          * Plugin authors have powerful FRP stream API.
+          * Stream API hidden from users by pipeline compiler.
+      </div>
+    </section>
+
+    <section class="sigh-2">
+      <div data-markdown data-seq=-3>
+        # That example from earlier with sigh
+
+        ```javascript
+        // sigh.js
+        var glob, babel, concat // plugins injected into globals
+
+        module.exports = function(pipelines) {
+          pipeline.build = [
+            glob('app/**/*.js'),
+            babel(),
+            glob('raw/*.js'),
+            concat('dist/assets/output.js')
+          ]
+        }
+        ```
+      </div>
+      <div data-markdown data-seq=3>
+        # More parallelism
+
+        ```javascript
+        // sigh.js
+        var merge, glob, babel, concat
+
+        module.exports = function(pipelines) {
+          pipeline.build = [
+            merge(
+              [ glob('app/**/*.js'), babel() ],
+              glob('raw/*.js')
+            ),
+            concat('dist/assets/output.js')
+          ]
+        }
+        ```
+      </div>
+      <footer data-seq=1-2>
+        Run once
+        <div class=console>
+          <span data-blink=500>❯</span> sigh
+        </div>
+      </footer>
+      <footer data-seq=2->
+        Watch files, incremental rebuilds
+        <div class=console>
+          <span data-blink=500>❯</span> sigh -w
+        </div>
+      </footer>
+    </section>
+
+    <section class="sigh-3">
+      <header data-markdown data-seq=-2>
+        # A more complicated example
+
+        ```javascript
+        // sigh.js
+        var glob, babel, sass, write, livereload, process
+
+        module.exports = function(pipelines) {
+          pipelines.client = [
+            merge(
+              [
+                glob({ basePath: 'src' }, '*.js', 'app.scss'),
+                sass(),
+                babel(),
+                write({ clobber: '!(jspm_packages)' }, 'build'),
+              ],
+              glob('index.html', 'config.js')
+            ),
+            livereload()
+          ]
+
+          pipelines.server = [
+            glob('server.js'),
+            process('node server.js')
+          ]
+        }
+        ```
+      </header>
+      <header data-markdown data-seq=2->
+        # With more parallelism and environments
+
+        ```javascript
+        var glob, babel, sass, merge, write, livereload, process
+        var env, concat, uglify
+
+        module.exports = function(pipelines) {
+          var globOpts = { basePath: 'src' }
+
+          pipelines.client = [
+            merge(
+              [
+                merge(
+                  [ glob(globOpts, 'app.scss'), sass() ],
+                  [
+                    glob(glopOpts, '*.js'),
+                    babel(),
+                    env(
+                      [ concat('combined.js'), uglify() ],
+                      [ 'production', 'staging' ]
+                    )
+                  ]
+                ),
+                write({ clobber: '!(jspm_packages)' }, 'build'),
+              ],
+              glob('index.html', 'config.js')
+            ),
+            livereload()
+          ]
+
+          pipelines.server = [
+            glob('server.js'),
+            process('node server.js')
+          ]
+        }
+        ```
+      </header>
+      <footer data-seq=-1>
+        Run all pipelines: <span class=console>
+          <span data-blink=500>❯</span> sigh
+        </span>
+      </footer>
+      <footer data-seq=1-3>
+        Same as: <span class=console>
+          <span data-blink=500>❯</span> sigh client server
+        </span>
+      </footer>
+      <footer data-seq=3>
+        Production build: <span class=console>
+          <span data-blink=500>❯</span> sigh -e production
+        </span>
+      </footer>
+    </section>
+
+    <section class="sigh-4">
+      <header data-markdown>
+        # Connecting pipelines together
+
+        ```javascript
+        var glob, pipeline, babel, debounce, write, mocha
+
+        module.exports = function(pipelines) {
+          pipelines['build-sources'] = [
+            glob({ basePath: 'src' }, '*.js', 'plugin/*.js'),
+            babel({ modules: 'common' }),
+            write('lib')
+          ]
+
+          pipelines['build-tests'] = [
+            glob({ basePath: 'src/test' }, '*.js', 'plugin/*.js'),
+            babel({ modules: 'common' }),
+            write('lib/test')
+          ]
+
+          pipelines.alias.build = ['build-sources', 'build-tests']
+
+          pipelines['run-tests'] = [
+            // pipeline does not force pipelines to run, if user
+            // runs 'sigh build-tests run-tests' then
+            // 'build-source' will not be run
+            pipeline('build-sources', 'build-tests'),
+            debounce(700),
+            // { activate: true } forces mocha pipeline to
+            // run even if it was not selected
+            pipeline({ activate: true }, 'mocha')
+          ]
+
+          // explicit pipelines only run if selected or activated.
+          pipelines.explicit.mocha = [
+            mocha({ files: 'lib/test/**/*.spec.js' })
+          ]
+        }
+        ```
+      </header>
+      <footer data-seq=-1>
+        Incremental rebuilds without tests: <span class=console>
+          <span data-blink=500>❯</span> sigh -w build
+        </span>
+      </footer>
+      <footer data-seq=1>
+        Incremental rebuilds with tests: <span class=console>
+          <span data-blink=500>❯</span> sigh -w
+        </span>
+      </footer>
+      <footer data-seq=2>
+        Only run tests: <span class=console>
+          <span data-blink=500>❯</span> sigh mocha
+        </span>
+      </footer>
+    </section>
+
+    <section class="sigh-5">
+      <div data-markdown>
+        # sigh uses multiple processes for extra speed.
+
+        * Tests: keeps two processes cached and waiting.
+          * Tests killed when new value received while running.
+          * Second process already waiting to avoid startup delay.
+        * Safe-parallelism:
+          * Array of events split up and distributed to processes.
+          * Collects results from all processes.
+          * Forwards all events in one payload, just as if one process did it.
+        * Compiles ES6 files faster than the native transpiler.
+
+        # Structure
+
+        * Make bigger pipelines by connecting pipelines together.
+        * Supports gulp plugins.
+      </div>
+    </section>
+
+    <section class="sigh-6">
+      <div data-markdown data-seq=-1>
+        # sigh helps scaffold plugins (with yeoman)
+
+        <div class=console><span data-blink=500>❯</span> sigh -p plugin-name<br>
+          ? <strong>What is the name of this plugin?</strong> plugin name<br>
+          ? <strong>Which github username/organisation should own this plugin?</strong> username<br>
+          ? <strong>What's your github author?</strong> Your Name &lt;name@email.net&gt;<br>
+          ? <strong>Which of the following apply to your plugin?</strong> (Press &lt;space&gt; to select)<br>
+          ❯◉ Maps input files to output files 1:1<br>
+          &nbsp;◯ Spreads work over multiple CPUs<br>
+          ? <strong>Which features would you like to use?</strong> (Press &lt;space&gt; to select)<br>
+          ❯◉ CircleCI integration<br>
+          &nbsp;◯ TravisCI integration<br>
+          ? <strong>Which dependencies do you need?</strong> (Press &lt;space&gt; to select)<br>
+          ❯◉ bluebird<br>
+          &nbsp;◉ lodash<br>
+          &nbsp;◉ sigh-core</div>
+
+        Github organisation/author and CI remembered for next time.
+      </div>
+      <div data-seq=1>
+        <h2>Then fill in the remaining code and publish</h2>
+        <div class=console>
+          <span data-blink=500>❯</span> cd plugin-name<br>
+          <span data-blink=500>❯</span> sigh -w<br>
+          # edit code, sigh will recompile and run tests as you do<br>
+          <span data-blink=500>❯</span> npm publish<br>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

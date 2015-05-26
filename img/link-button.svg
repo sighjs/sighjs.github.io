@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="homeElementChalk" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 406 106"
+     xml:space="preserve">
+  <filter id="nasty-glow">
+    <feColorMatrix type="matrix" values=
+      "0 0 0 0   0
+       0 0 0 0.9 0
+       0 0 0 0.9 0
+       0 0 0 1   0"/>
+    <feGaussianBlur stdDeviation="10.5" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  <ellipse cx="203" cy="53" rx="200" ry="50" stroke="black" stroke-width="3" fill="red" style="filter: url(#nasty-glow)" />
+</svg>

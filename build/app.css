@@ -1,0 +1,255 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0; }
+
+body {
+  -webkit-font-smoothing: none;
+  font-size: 32px;
+  border: 10px solid black;
+  font-family: "Comic Sans MS";
+  overflow-y: scroll;
+  position: relative; }
+  body::after {
+    content: "";
+    opacity: 0.2;
+    background: url(../img/star-field-inv.gif);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1; }
+
+p {
+  padding: 0;
+  margin: 0; }
+
+pre {
+  background-color: white;
+  font-size: 25px; }
+
+aside {
+  font-size: 20px;
+  float: left;
+  padding: 30px 5px;
+  height: 100%;
+  width: 15%;
+  overflow-y: scroll;
+  border-right: 3px solid black; }
+  aside ul {
+    list-style: none; }
+  aside li {
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 0;
+    background: url(../img/link-button.svg);
+    background-repeat: no-repeat;
+    background-size: contain; }
+    aside li.active {
+      -webkit-filter: hue-rotate(105deg) saturate(5);
+      filter: hue-rotate(105deg) saturate(5); }
+    aside li:hover {
+      -webkit-filter: hue-rotate(180deg) saturate(5);
+      filter: hue-rotate(180deg) saturate(5); }
+
+.console {
+  margin: 15px 0;
+  border-radius: 15px;
+  border: 5px solid black;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 25px;
+  background-color: white; }
+
+.loading section {
+  display: none; }
+
+* {
+  box-sizing: border-box; }
+
+h1 {
+  margin: 20px 10px 10px 0;
+  font-size: 38px; }
+
+h2 {
+  margin: 20px 0 0;
+  font-size: 35px; }
+
+ul, li {
+  padding: 0;
+  margin: 0; }
+
+section ul > li {
+  margin-left: 1.2em; }
+
+li {
+  list-style-position: outside; }
+
+section {
+  position: relative;
+  height: 100%;
+  padding: 50px 70px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  section > * {
+    min-width: 75%; }
+  section header, section footer {
+    position: absolute;
+    left: 70px; }
+  section header {
+    top: 50px; }
+  section footer {
+    bottom: 50px; }
+
+.intro {
+  font-size: 28px; }
+  .intro .warning {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    z-index: 2; }
+  .intro header {
+    font-family: Times;
+    font-size: 30px; }
+
+.what-is p {
+  margin-bottom: 20px; }
+
+.hey-suckah {
+  padding: 0.7em;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: white; }
+
+.Makefiles {
+  position: relative;
+  padding-top: 0px; }
+  .Makefiles header {
+    position: relative;
+    top: 0;
+    left: 0; }
+  .Makefiles img {
+    vertical-align: -15%;
+    height: 100px; }
+  .Makefiles pre {
+    margin-top: 0;
+    font-size: 30px; }
+    .Makefiles pre .colon {
+      font-size: 120px; }
+  .Makefiles .console {
+    position: absolute;
+    min-width: 0%;
+    top: 10px;
+    right: 200px; }
+    .Makefiles .console img {
+      margin-left: 10px; }
+  .Makefiles .hey-suckah {
+    position: absolute;
+    display: inline-block; }
+
+section.jake .jake {
+  height: 100px;
+  position: absolute;
+  left: 400px;
+  top: 10px;
+  z-index: 3; }
+
+section.jake .mr-t {
+  height: 200px;
+  position: absolute;
+  left: 374px;
+  top: 17px;
+  z-index: 2; }
+
+section.jake .hey-suckah {
+  position: relative;
+  text-decoration: line-through; }
+
+.oh-grunt {
+  padding-top: 10px; }
+  .oh-grunt pre {
+    margin: 10px 0 0; }
+  .oh-grunt h2 {
+    margin-top: 30px; }
+  .oh-grunt > div {
+    background-color: white; }
+  .oh-grunt .console {
+    width: 30%; }
+
+.oh-grunt-3 {
+  font-size: 28px; }
+  .oh-grunt-3 pre {
+    background-color: white;
+    margin-top: 20px;
+    width: 50em;
+    height: 18em;
+    overflow: scroll;
+    font-size: 17px; }
+
+.oh-gulp, .oh-gulp-4 {
+  padding-top: 5px; }
+  .oh-gulp div, .oh-gulp-4 div {
+    height: 100%; }
+  .oh-gulp pre, .oh-gulp-4 pre {
+    max-height: 100%;
+    overflow-y: scroll; }
+
+.oh-gulp-3 img {
+  position: relative; }
+
+.oh-gulp-3 div img {
+  height: 100px;
+  width: 80%; }
+
+.broccoli .hey-suckah, .intro .hey-suckah {
+  position: relative;
+  top: -13px;
+  z-index: 4; }
+
+.broccoli-2, .sigh-3, .sigh-4 {
+  height: 100%; }
+  .broccoli-2 > div, .sigh-3 > div, .sigh-4 > div {
+    height: 100%; }
+  .broccoli-2 pre, .sigh-3 pre, .sigh-4 pre {
+    height: 80%;
+    overflow-y: scroll; }
+
+.moaning li ul {
+  margin-top: 10px; }
+
+.moaning li li {
+  margin-left: 0;
+  padding-left: 70px;
+  height: 80px;
+  line-height: 70px;
+  list-style: none;
+  background: url("../img/wtf.png") no-repeat 0 0; }
+
+.sigh-2 > div {
+  position: relative;
+  top: -2em; }
+
+.sigh-3 {
+  padding: 10px; }
+
+.sigh-3 > *, .sigh-4 > * {
+  min-width: 85%; }
+
+.sigh-3 .console, .sigh-4 .console {
+  padding: 10px 20px; }
+
+.sigh-3 header, .sigh-4 header {
+  height: 60%; }
+  .sigh-3 header pre, .sigh-4 header pre {
+    height: 100%; }
+
+.sigh-6 {
+  line-height: 1em; }
+  .sigh-6 .console {
+    font-size: 70%; }
+/*# sourceMappingURL=app.css.map */
