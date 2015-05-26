@@ -120,6 +120,28 @@ section {
 .what-is p {
   margin-bottom: 20px; }
 
+@-webkit-keyframes sliding-fading {
+  0% {
+    left: 0px; }
+  100% {
+    left: 200px; }
+  0% {
+    opacity: 0; }
+  20% {
+    opacity: 0.5; }
+  40% {
+    opacity: 0; }
+  60% {
+    opacity: 0.5; }
+  80% {
+    opacity: 0; }
+  100% {
+    opacity: 0.5; } }
+
+.history img {
+  position: absolute;
+  -webkit-animation: sliding-fading 4s infinite alternate; }
+
 .hey-suckah {
   padding: 0.7em;
   border: 3px solid black;
@@ -171,7 +193,8 @@ section.jake .hey-suckah {
   text-decoration: line-through; }
 
 .oh-grunt {
-  padding-top: 10px; }
+  padding-top: 10px;
+  background-color: blue; }
   .oh-grunt pre {
     margin: 10px 0 0; }
   .oh-grunt h2 {
@@ -180,6 +203,10 @@ section.jake .hey-suckah {
     background-color: white; }
   .oh-grunt .console {
     width: 30%; }
+  .oh-grunt footer {
+    position: absolute;
+    text-align: right;
+    bottom: 0; }
 
 .oh-grunt-3 {
   font-size: 28px; }
