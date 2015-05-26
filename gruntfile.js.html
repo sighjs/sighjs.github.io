@@ -1,0 +1,667 @@
+<pre><code>
+  <span class="hljs-comment">// Generated on 2015-05-17 using generator-angular-fullstack 2.0.13</span>
+  <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(grunt)</span> </span>{
+    <span class="hljs-keyword">var</span> localConfig;
+    <span class="hljs-keyword">try</span> {
+      localConfig = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./server/config/local.env'</span>);
+    } <span class="hljs-keyword">catch</span>(e) {
+      localConfig = {};
+    }
+
+    <span class="hljs-comment">// Load grunt tasks automatically, when needed</span>
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'jit-grunt'</span>)(grunt, {
+      express: <span class="hljs-string">'grunt-express-server'</span>,
+      useminPrepare: <span class="hljs-string">'grunt-usemin'</span>,
+      ngtemplates: <span class="hljs-string">'grunt-angular-templates'</span>,
+      cdnify: <span class="hljs-string">'grunt-google-cdn'</span>,
+      protractor: <span class="hljs-string">'grunt-protractor-runner'</span>,
+      injector: <span class="hljs-string">'grunt-asset-injector'</span>,
+      buildcontrol: <span class="hljs-string">'grunt-build-control'</span>
+    });
+
+    <span class="hljs-comment">// Time how long tasks take. Can help when optimizing build times</span>
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'time-grunt'</span>)(grunt);
+
+    <span class="hljs-comment">// Define the configuration for all the tasks</span>
+    grunt.initConfig({
+
+      <span class="hljs-comment">// Project settings</span>
+      pkg: grunt.file.readJSON(<span class="hljs-string">'package.json'</span>),
+      yeoman: {
+        <span class="hljs-comment">// configurable paths</span>
+        client: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./bower.json'</span>).appPath || <span class="hljs-string">'client'</span>,
+        dist: <span class="hljs-string">'dist'</span>
+      },
+      express: {
+        options: {
+          port: process.env.PORT || <span class="hljs-number">9000</span>
+        },
+        dev: {
+          options: {
+            script: <span class="hljs-string">'server/app.js'</span>,
+            debug: <span class="hljs-literal">true</span>
+          }
+        },
+        prod: {
+          options: {
+            script: <span class="hljs-string">'dist/server/app.js'</span>
+          }
+        }
+      },
+      open: {
+        server: {
+          url: <span class="hljs-string">'http://localhost:&lt;%= express.options.port %&gt;'</span>
+        }
+      },
+      watch: {
+        injectJS: {
+          files: [
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.js'</span>,
+            <span class="hljs-string">'!&lt;%= yeoman.client %&gt;/{app,components}/**/*.spec.js'</span>,
+            <span class="hljs-string">'!&lt;%= yeoman.client %&gt;/{app,components}/**/*.mock.js'</span>,
+            <span class="hljs-string">'!&lt;%= yeoman.client %&gt;/app/app.js'</span>],
+          tasks: [<span class="hljs-string">'injector:scripts'</span>]
+        },
+        injectCss: {
+          files: [
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.css'</span>
+          ],
+          tasks: [<span class="hljs-string">'injector:css'</span>]
+        },
+        mochaTest: {
+          files: [<span class="hljs-string">'server/**/*.spec.js'</span>],
+          tasks: [<span class="hljs-string">'env:test'</span>, <span class="hljs-string">'mochaTest'</span>]
+        },
+        jsTest: {
+          files: [
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.spec.js'</span>,
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.mock.js'</span>
+          ],
+          tasks: [<span class="hljs-string">'newer:jshint:all'</span>, <span class="hljs-string">'karma'</span>]
+        },
+        injectSass: {
+          files: [
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.{scss,sass}'</span>],
+          tasks: [<span class="hljs-string">'injector:sass'</span>]
+        },
+        sass: {
+          files: [
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.{scss,sass}'</span>],
+          tasks: [<span class="hljs-string">'sass'</span>, <span class="hljs-string">'autoprefixer'</span>]
+        },
+        gruntfile: {
+          files: [<span class="hljs-string">'Gruntfile.js'</span>]
+        },
+        livereload: {
+          files: [
+            <span class="hljs-string">'{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.css'</span>,
+            <span class="hljs-string">'{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.html'</span>,
+            <span class="hljs-string">'{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.js'</span>,
+            <span class="hljs-string">'!{.tmp,&lt;%= yeoman.client %&gt;}{app,components}/**/*.spec.js'</span>,
+            <span class="hljs-string">'!{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.mock.js'</span>,
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'</span>
+          ],
+          options: {
+            livereload: <span class="hljs-literal">true</span>
+          }
+        },
+        express: {
+          files: [
+            <span class="hljs-string">'server/**/*.{js,json}'</span>
+          ],
+          tasks: [<span class="hljs-string">'express:dev'</span>, <span class="hljs-string">'wait'</span>],
+          options: {
+            livereload: <span class="hljs-literal">true</span>,
+            nospawn: <span class="hljs-literal">true</span> <span class="hljs-comment">//Without this option specified express won't be reloaded</span>
+          }
+        }
+      },
+
+      <span class="hljs-comment">// Make sure code styles are up to par and there are no obvious mistakes</span>
+      jshint: {
+        options: {
+          jshintrc: <span class="hljs-string">'&lt;%= yeoman.client %&gt;/.jshintrc'</span>,
+          reporter: <span class="hljs-built_in">require</span>(<span class="hljs-string">'jshint-stylish'</span>)
+        },
+        server: {
+          options: {
+            jshintrc: <span class="hljs-string">'server/.jshintrc'</span>
+          },
+          src: [
+            <span class="hljs-string">'server/**/*.js'</span>,
+            <span class="hljs-string">'!server/**/*.spec.js'</span>
+          ]
+        },
+        serverTest: {
+          options: {
+            jshintrc: <span class="hljs-string">'server/.jshintrc-spec'</span>
+          },
+          src: [<span class="hljs-string">'server/**/*.spec.js'</span>]
+        },
+        all: [
+          <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.js'</span>,
+          <span class="hljs-string">'!&lt;%= yeoman.client %&gt;/{app,components}/**/*.spec.js'</span>,
+          <span class="hljs-string">'!&lt;%= yeoman.client %&gt;/{app,components}/**/*.mock.js'</span>
+        ],
+        test: {
+          src: [
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.spec.js'</span>,
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.mock.js'</span>
+          ]
+        }
+      },
+
+      <span class="hljs-comment">// Empties folders to start fresh</span>
+      clean: {
+        dist: {
+          files: [{
+            dot: <span class="hljs-literal">true</span>,
+            src: [
+              <span class="hljs-string">'.tmp'</span>,
+              <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/*'</span>,
+              <span class="hljs-string">'!&lt;%= yeoman.dist %&gt;/.git*'</span>,
+              <span class="hljs-string">'!&lt;%= yeoman.dist %&gt;/.openshift'</span>,
+              <span class="hljs-string">'!&lt;%= yeoman.dist %&gt;/Procfile'</span>
+            ]
+          }]
+        },
+        server: <span class="hljs-string">'.tmp'</span>
+      },
+
+      <span class="hljs-comment">// Add vendor prefixed styles</span>
+      autoprefixer: {
+        options: {
+          browsers: [<span class="hljs-string">'last 1 version'</span>]
+        },
+        dist: {
+          files: [{
+            expand: <span class="hljs-literal">true</span>,
+            cwd: <span class="hljs-string">'.tmp/'</span>,
+            src: <span class="hljs-string">'{,*/}*.css'</span>,
+            dest: <span class="hljs-string">'.tmp/'</span>
+          }]
+        }
+      },
+
+      <span class="hljs-comment">// Debugging with node inspector</span>
+      <span class="hljs-string">'node-inspector'</span>: {
+        custom: {
+          options: {
+            <span class="hljs-string">'web-host'</span>: <span class="hljs-string">'localhost'</span>
+          }
+        }
+      },
+
+      <span class="hljs-comment">// Use nodemon to run server in debug mode with an initial breakpoint</span>
+      nodemon: {
+        debug: {
+          script: <span class="hljs-string">'server/app.js'</span>,
+          options: {
+            nodeArgs: [<span class="hljs-string">'--debug-brk'</span>],
+            env: {
+              PORT: process.env.PORT || <span class="hljs-number">9000</span>
+            },
+            callback: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(nodemon)</span> </span>{
+              nodemon.on(<span class="hljs-string">'log'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(event)</span> </span>{
+                <span class="hljs-built_in">console</span>.log(event.colour);
+              });
+
+              <span class="hljs-comment">// opens browser on initial server start</span>
+              nodemon.on(<span class="hljs-string">'config:update'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+                  <span class="hljs-built_in">require</span>(<span class="hljs-string">'open'</span>)(<span class="hljs-string">'http://localhost:8080/debug?port=5858'</span>);
+                }, <span class="hljs-number">500</span>);
+              });
+            }
+          }
+        }
+      },
+
+      <span class="hljs-comment">// Automatically inject Bower components into the app</span>
+      wiredep: {
+        target: {
+          src: <span class="hljs-string">'&lt;%= yeoman.client %&gt;/index.html'</span>,
+          ignorePath: <span class="hljs-string">'&lt;%= yeoman.client %&gt;/'</span>,
+          exclude: [<span class="hljs-regexp">/bootstrap-sass-official/</span>, <span class="hljs-regexp">/bootstrap.js/</span>, <span class="hljs-string">'/json3/'</span>, <span class="hljs-string">'/es5-shim/'</span>, <span class="hljs-regexp">/bootstrap.css/</span>, <span class="hljs-regexp">/font-awesome.css/</span> ]
+        }
+      },
+
+      <span class="hljs-comment">// Renames files for browser caching purposes</span>
+      rev: {
+        dist: {
+          files: {
+            src: [
+              <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/{,*/}*.js'</span>,
+              <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/{,*/}*.css'</span>,
+              <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'</span>,
+              <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/assets/fonts/*'</span>
+            ]
+          }
+        }
+      },
+
+      <span class="hljs-comment">// Reads HTML for usemin blocks to enable smart builds that automatically</span>
+      <span class="hljs-comment">// concat, minify and revision files. Creates configurations in memory so</span>
+      <span class="hljs-comment">// additional tasks can operate on them</span>
+      useminPrepare: {
+        html: [<span class="hljs-string">'&lt;%= yeoman.client %&gt;/index.html'</span>],
+        options: {
+          dest: <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public'</span>
+        }
+      },
+
+      <span class="hljs-comment">// Performs rewrites based on rev and the useminPrepare configuration</span>
+      usemin: {
+        html: [<span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/{,*/}*.html'</span>],
+        css: [<span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/{,*/}*.css'</span>],
+        js: [<span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/{,*/}*.js'</span>],
+        options: {
+          assetsDirs: [
+            <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public'</span>,
+            <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/assets/images'</span>
+          ],
+          <span class="hljs-comment">// This is so we update image references in our ng-templates</span>
+          patterns: {
+            js: [
+              [<span class="hljs-regexp">/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm</span>, <span class="hljs-string">'Update the JS to reference our revved images'</span>]
+            ]
+          }
+        }
+      },
+
+      <span class="hljs-comment">// The following *-min tasks produce minified files in the dist folder</span>
+      imagemin: {
+        dist: {
+          files: [{
+            expand: <span class="hljs-literal">true</span>,
+            cwd: <span class="hljs-string">'&lt;%= yeoman.client %&gt;/assets/images'</span>,
+            src: <span class="hljs-string">'{,*/}*.{png,jpg,jpeg,gif}'</span>,
+            dest: <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/assets/images'</span>
+          }]
+        }
+      },
+
+      svgmin: {
+        dist: {
+          files: [{
+            expand: <span class="hljs-literal">true</span>,
+            cwd: <span class="hljs-string">'&lt;%= yeoman.client %&gt;/assets/images'</span>,
+            src: <span class="hljs-string">'{,*/}*.svg'</span>,
+            dest: <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/assets/images'</span>
+          }]
+        }
+      },
+
+      <span class="hljs-comment">// Allow the use of non-minsafe AngularJS files. Automatically makes it</span>
+      <span class="hljs-comment">// minsafe compatible so Uglify does not destroy the ng references</span>
+      ngAnnotate: {
+        dist: {
+          files: [{
+            expand: <span class="hljs-literal">true</span>,
+            cwd: <span class="hljs-string">'.tmp/concat'</span>,
+            src: <span class="hljs-string">'*/**.js'</span>,
+            dest: <span class="hljs-string">'.tmp/concat'</span>
+          }]
+        }
+      },
+
+      <span class="hljs-comment">// Package all the html partials into a single javascript payload</span>
+      ngtemplates: {
+        options: {
+          <span class="hljs-comment">// This should be the name of your apps angular module</span>
+          <span class="hljs-built_in">module</span>: <span class="hljs-string">'totoroprojectApp'</span>,
+          htmlmin: {
+            collapseBooleanAttributes: <span class="hljs-literal">true</span>,
+            collapseWhitespace: <span class="hljs-literal">true</span>,
+            removeAttributeQuotes: <span class="hljs-literal">true</span>,
+            removeEmptyAttributes: <span class="hljs-literal">true</span>,
+            removeRedundantAttributes: <span class="hljs-literal">true</span>,
+            removeScriptTypeAttributes: <span class="hljs-literal">true</span>,
+            removeStyleLinkTypeAttributes: <span class="hljs-literal">true</span>
+          },
+          usemin: <span class="hljs-string">'app/app.js'</span>
+        },
+        main: {
+          cwd: <span class="hljs-string">'&lt;%= yeoman.client %&gt;'</span>,
+          src: [<span class="hljs-string">'{app,components}/**/*.html'</span>],
+          dest: <span class="hljs-string">'.tmp/templates.js'</span>
+        },
+        tmp: {
+          cwd: <span class="hljs-string">'.tmp'</span>,
+          src: [<span class="hljs-string">'{app,components}/**/*.html'</span>],
+          dest: <span class="hljs-string">'.tmp/tmp-templates.js'</span>
+        }
+      },
+
+      <span class="hljs-comment">// Replace Google CDN references</span>
+      cdnify: {
+        dist: {
+          html: [<span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/*.html'</span>]
+        }
+      },
+
+      <span class="hljs-comment">// Copies remaining files to places other tasks can use</span>
+      copy: {
+        dist: {
+          files: [{
+            expand: <span class="hljs-literal">true</span>,
+            dot: <span class="hljs-literal">true</span>,
+            cwd: <span class="hljs-string">'&lt;%= yeoman.client %&gt;'</span>,
+            dest: <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public'</span>,
+            src: [
+              <span class="hljs-string">'*.{ico,png,txt}'</span>,
+              <span class="hljs-string">'.htaccess'</span>,
+              <span class="hljs-string">'bower_components/**/*'</span>,
+              <span class="hljs-string">'assets/images/{,*/}*.{webp}'</span>,
+              <span class="hljs-string">'assets/fonts/**/*'</span>,
+              <span class="hljs-string">'index.html'</span>
+            ]
+          }, {
+            expand: <span class="hljs-literal">true</span>,
+            cwd: <span class="hljs-string">'.tmp/images'</span>,
+            dest: <span class="hljs-string">'&lt;%= yeoman.dist %&gt;/public/assets/images'</span>,
+            src: [<span class="hljs-string">'generated/*'</span>]
+          }, {
+            expand: <span class="hljs-literal">true</span>,
+            dest: <span class="hljs-string">'&lt;%= yeoman.dist %&gt;'</span>,
+            src: [
+              <span class="hljs-string">'package.json'</span>,
+              <span class="hljs-string">'server/**/*'</span>
+            ]
+          }]
+        },
+        styles: {
+          expand: <span class="hljs-literal">true</span>,
+          cwd: <span class="hljs-string">'&lt;%= yeoman.client %&gt;'</span>,
+          dest: <span class="hljs-string">'.tmp/'</span>,
+          src: [<span class="hljs-string">'{app,components}/**/*.css'</span>]
+        }
+      },
+
+      buildcontrol: {
+        options: {
+          dir: <span class="hljs-string">'dist'</span>,
+          commit: <span class="hljs-literal">true</span>,
+          push: <span class="hljs-literal">true</span>,
+          connectCommits: <span class="hljs-literal">false</span>,
+          message: <span class="hljs-string">'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'</span>
+        },
+        heroku: {
+          options: {
+            remote: <span class="hljs-string">'heroku'</span>,
+            branch: <span class="hljs-string">'master'</span>
+          }
+        },
+        openshift: {
+          options: {
+            remote: <span class="hljs-string">'openshift'</span>,
+            branch: <span class="hljs-string">'master'</span>
+          }
+        }
+      },
+
+      <span class="hljs-comment">// Run some tasks in parallel to speed up the build process</span>
+      concurrent: {
+        server: [
+          <span class="hljs-string">'sass'</span>,
+        ],
+        test: [
+          <span class="hljs-string">'sass'</span>,
+        ],
+        debug: {
+          tasks: [
+            <span class="hljs-string">'nodemon'</span>,
+            <span class="hljs-string">'node-inspector'</span>
+          ],
+          options: {
+            logConcurrentOutput: <span class="hljs-literal">true</span>
+          }
+        },
+        dist: [
+          <span class="hljs-string">'sass'</span>,
+          <span class="hljs-string">'imagemin'</span>,
+          <span class="hljs-string">'svgmin'</span>
+        ]
+      },
+
+      <span class="hljs-comment">// Test settings</span>
+      karma: {
+        unit: {
+          configFile: <span class="hljs-string">'karma.conf.js'</span>,
+          singleRun: <span class="hljs-literal">true</span>
+        }
+      },
+
+      mochaTest: {
+        options: {
+          reporter: <span class="hljs-string">'spec'</span>
+        },
+        src: [<span class="hljs-string">'server/**/*.spec.js'</span>]
+      },
+
+      protractor: {
+        options: {
+          configFile: <span class="hljs-string">'protractor.conf.js'</span>
+        },
+        chrome: {
+          options: {
+            args: {
+              browser: <span class="hljs-string">'chrome'</span>
+            }
+          }
+        }
+      },
+
+      env: {
+        test: {
+          NODE_ENV: <span class="hljs-string">'test'</span>
+        },
+        prod: {
+          NODE_ENV: <span class="hljs-string">'production'</span>
+        },
+        all: localConfig
+      },
+
+      <span class="hljs-comment">// Compiles Sass to CSS</span>
+      sass: {
+        server: {
+          options: {
+            loadPath: [
+              <span class="hljs-string">'&lt;%= yeoman.client %&gt;/bower_components'</span>,
+              <span class="hljs-string">'&lt;%= yeoman.client %&gt;/app'</span>,
+              <span class="hljs-string">'&lt;%= yeoman.client %&gt;/components'</span>
+            ],
+            compass: <span class="hljs-literal">false</span>
+          },
+          files: {
+            <span class="hljs-string">'.tmp/app/app.css'</span> : <span class="hljs-string">'&lt;%= yeoman.client %&gt;/app/app.scss'</span>
+          }
+        }
+      },
+
+      injector: {
+        options: {
+
+        },
+        <span class="hljs-comment">// Inject application script files into index.html (doesn't include bower)</span>
+        scripts: {
+          options: {
+            transform: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filePath)</span> </span>{
+              filePath = filePath.replace(<span class="hljs-string">'/client/'</span>, <span class="hljs-string">''</span>);
+              filePath = filePath.replace(<span class="hljs-string">'/.tmp/'</span>, <span class="hljs-string">''</span>);
+              <span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;script src="'</span> + filePath + <span class="hljs-string">'"&gt;&lt;/script&gt;'</span>;
+            },
+            starttag: <span class="hljs-string">'&lt;!-- injector:js --&gt;'</span>,
+            endtag: <span class="hljs-string">'&lt;!-- endinjector --&gt;'</span>
+          },
+          files: {
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/index.html'</span>: [
+                [<span class="hljs-string">'{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.js'</span>,
+                 <span class="hljs-string">'!{.tmp,&lt;%= yeoman.client %&gt;}/app/app.js'</span>,
+                 <span class="hljs-string">'!{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.spec.js'</span>,
+                 <span class="hljs-string">'!{.tmp,&lt;%= yeoman.client %&gt;}/{app,components}/**/*.mock.js'</span>]
+              ]
+          }
+        },
+
+        <span class="hljs-comment">// Inject component scss into app.scss</span>
+        sass: {
+          options: {
+            transform: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filePath)</span> </span>{
+              filePath = filePath.replace(<span class="hljs-string">'/client/app/'</span>, <span class="hljs-string">''</span>);
+              filePath = filePath.replace(<span class="hljs-string">'/client/components/'</span>, <span class="hljs-string">''</span>);
+              <span class="hljs-keyword">return</span> <span class="hljs-string">'@import \''</span> + filePath + <span class="hljs-string">'\';'</span>;
+            },
+            starttag: <span class="hljs-string">'// injector'</span>,
+            endtag: <span class="hljs-string">'// endinjector'</span>
+          },
+          files: {
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/app/app.scss'</span>: [
+              <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.{scss,sass}'</span>,
+              <span class="hljs-string">'!&lt;%= yeoman.client %&gt;/app/app.{scss,sass}'</span>
+            ]
+          }
+        },
+
+        <span class="hljs-comment">// Inject component css into index.html</span>
+        css: {
+          options: {
+            transform: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filePath)</span> </span>{
+              filePath = filePath.replace(<span class="hljs-string">'/client/'</span>, <span class="hljs-string">''</span>);
+              filePath = filePath.replace(<span class="hljs-string">'/.tmp/'</span>, <span class="hljs-string">''</span>);
+              <span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;link rel="stylesheet" href="'</span> + filePath + <span class="hljs-string">'"&gt;'</span>;
+            },
+            starttag: <span class="hljs-string">'&lt;!-- injector:css --&gt;'</span>,
+            endtag: <span class="hljs-string">'&lt;!-- endinjector --&gt;'</span>
+          },
+          files: {
+            <span class="hljs-string">'&lt;%= yeoman.client %&gt;/index.html'</span>: [
+              <span class="hljs-string">'&lt;%= yeoman.client %&gt;/{app,components}/**/*.css'</span>
+            ]
+          }
+        }
+      },
+    });
+
+    <span class="hljs-comment">// Used for delaying livereload until after server has restarted</span>
+    grunt.registerTask(<span class="hljs-string">'wait'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+      grunt.log.ok(<span class="hljs-string">'Waiting for server reload...'</span>);
+
+      <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">this</span>.async();
+
+      setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        grunt.log.writeln(<span class="hljs-string">'Done waiting!'</span>);
+        done();
+      }, <span class="hljs-number">1500</span>);
+    });
+
+    grunt.registerTask(<span class="hljs-string">'express-keepalive'</span>, <span class="hljs-string">'Keep grunt running'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">this</span>.async();
+    });
+
+    grunt.registerTask(<span class="hljs-string">'serve'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(target)</span> </span>{
+      <span class="hljs-keyword">if</span> (target === <span class="hljs-string">'dist'</span>) {
+        <span class="hljs-keyword">return</span> grunt.task.run([<span class="hljs-string">'build'</span>, <span class="hljs-string">'env:all'</span>, <span class="hljs-string">'env:prod'</span>, <span class="hljs-string">'express:prod'</span>, <span class="hljs-string">'wait'</span>, <span class="hljs-string">'open'</span>, <span class="hljs-string">'express-keepalive'</span>]);
+      }
+
+      <span class="hljs-keyword">if</span> (target === <span class="hljs-string">'debug'</span>) {
+        <span class="hljs-keyword">return</span> grunt.task.run([
+          <span class="hljs-string">'clean:server'</span>,
+          <span class="hljs-string">'env:all'</span>,
+          <span class="hljs-string">'injector:sass'</span>,
+          <span class="hljs-string">'concurrent:server'</span>,
+          <span class="hljs-string">'injector'</span>,
+          <span class="hljs-string">'wiredep'</span>,
+          <span class="hljs-string">'autoprefixer'</span>,
+          <span class="hljs-string">'concurrent:debug'</span>
+        ]);
+      }
+
+      grunt.task.run([
+        <span class="hljs-string">'clean:server'</span>,
+        <span class="hljs-string">'env:all'</span>,
+        <span class="hljs-string">'injector:sass'</span>,
+        <span class="hljs-string">'concurrent:server'</span>,
+        <span class="hljs-string">'injector'</span>,
+        <span class="hljs-string">'wiredep'</span>,
+        <span class="hljs-string">'autoprefixer'</span>,
+        <span class="hljs-string">'express:dev'</span>,
+        <span class="hljs-string">'wait'</span>,
+        <span class="hljs-string">'open'</span>,
+        <span class="hljs-string">'watch'</span>
+      ]);
+    });
+
+    grunt.registerTask(<span class="hljs-string">'server'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+      grunt.log.warn(<span class="hljs-string">'The `server` task has been deprecated. Use `grunt serve` to start a server.'</span>);
+      grunt.task.run([<span class="hljs-string">'serve'</span>]);
+    });
+
+    grunt.registerTask(<span class="hljs-string">'test'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target)</span> </span>{
+      <span class="hljs-keyword">if</span> (target === <span class="hljs-string">'server'</span>) {
+        <span class="hljs-keyword">return</span> grunt.task.run([
+          <span class="hljs-string">'env:all'</span>,
+          <span class="hljs-string">'env:test'</span>,
+          <span class="hljs-string">'mochaTest'</span>
+        ]);
+      }
+
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (target === <span class="hljs-string">'client'</span>) {
+        <span class="hljs-keyword">return</span> grunt.task.run([
+          <span class="hljs-string">'clean:server'</span>,
+          <span class="hljs-string">'env:all'</span>,
+          <span class="hljs-string">'injector:sass'</span>,
+          <span class="hljs-string">'concurrent:test'</span>,
+          <span class="hljs-string">'injector'</span>,
+          <span class="hljs-string">'autoprefixer'</span>,
+          <span class="hljs-string">'karma'</span>
+        ]);
+      }
+
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (target === <span class="hljs-string">'e2e'</span>) {
+        <span class="hljs-keyword">return</span> grunt.task.run([
+          <span class="hljs-string">'clean:server'</span>,
+          <span class="hljs-string">'env:all'</span>,
+          <span class="hljs-string">'env:test'</span>,
+          <span class="hljs-string">'injector:sass'</span>,
+          <span class="hljs-string">'concurrent:test'</span>,
+          <span class="hljs-string">'injector'</span>,
+          <span class="hljs-string">'wiredep'</span>,
+          <span class="hljs-string">'autoprefixer'</span>,
+          <span class="hljs-string">'express:dev'</span>,
+          <span class="hljs-string">'protractor'</span>
+        ]);
+      }
+
+      <span class="hljs-keyword">else</span> grunt.task.run([
+        <span class="hljs-string">'test:server'</span>,
+        <span class="hljs-string">'test:client'</span>
+      ]);
+    });
+
+    grunt.registerTask(<span class="hljs-string">'build'</span>, [
+      <span class="hljs-string">'clean:dist'</span>,
+      <span class="hljs-string">'injector:sass'</span>,
+      <span class="hljs-string">'concurrent:dist'</span>,
+      <span class="hljs-string">'injector'</span>,
+      <span class="hljs-string">'wiredep'</span>,
+      <span class="hljs-string">'useminPrepare'</span>,
+      <span class="hljs-string">'autoprefixer'</span>,
+      <span class="hljs-string">'ngtemplates'</span>,
+      <span class="hljs-string">'concat'</span>,
+      <span class="hljs-string">'ngAnnotate'</span>,
+      <span class="hljs-string">'copy:dist'</span>,
+      <span class="hljs-string">'cdnify'</span>,
+      <span class="hljs-string">'cssmin'</span>,
+      <span class="hljs-string">'uglify'</span>,
+      <span class="hljs-string">'rev'</span>,
+      <span class="hljs-string">'usemin'</span>
+    ]);
+
+    grunt.registerTask(<span class="hljs-string">'default'</span>, [
+      <span class="hljs-string">'newer:jshint'</span>,
+      <span class="hljs-string">'test'</span>,
+      <span class="hljs-string">'build'</span>
+    ]);
+  };
+</code></pre>
