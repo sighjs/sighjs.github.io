@@ -62,7 +62,9 @@
     </section>
 
     <section class="history">
-      <img data-seq=1 src=img/grumpy-cat.jpg>
+      <img data-seq=1 src=img/allyourbase.jpg>
+      <img data-seq=2 src=img/grumpy-grandma.jpg>
+      <img data-seq=3 src=img/grumpy-cat.jpg>
       <div data-markdown>
         # History
 
@@ -138,6 +140,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
       <div data-markdown>
         ## Grunt
         ```javascript
+        // gruntfile.js
         module.exports = function(grunt) {
           grunt.initConfig({
             jshint: {
@@ -150,21 +153,24 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
           })
           grunt.loadNpmTasks('grunt-contrib-jshint')
           grunt.loadNpmTasks('grunt-mocha-test')
+          grunt.registerTask('build', [ 'jshint', 'mochaTest' ])
         }
         ```
         <div class=console>
-          <span data-blink=500>❯</span> grunt jshint
+          <span data-blink=500>❯</span> grunt build
         </div>
 
         ## npm
         ```javascript
+        // package.json
         "scripts": {
           "lint": "jshint src/*.js",
           "mocha": "mocha test/*.spec.js",
+          "build": "npm run lint && npm run mocha",
         }
         ```
         <div class=console>
-          <span data-blink=500>❯</span> npm lint mocha
+          <span data-blink=500>❯</span> npm build
         </div>
       </div>
       <footer>
@@ -204,6 +210,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         grunt.registerTask('ride-catbus', [
           'wait-at-bus-stop',
           'give-totoro-umbrella',
+          'other-stuff-happens',
           'get-on-catbus'
         ])
         ```
@@ -426,6 +433,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
     </section>
 
     <section class="jspm">
+      <img data-seq=1 src=img/totoro-in-rain.jpg>
       <div data-markdown>
         # jspm
 
@@ -503,6 +511,15 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
           * Plugin authors have powerful FRP stream API.
           * Stream API hidden from users by pipeline compiler.
       </div>
+    </section>
+
+    <section class="FRP">
+      <img src=img/frp.jpg>
+      <img data-seq=1- src=img/frp2.jpg>
+      <img data-seq=2- src=img/frp3.jpg>
+      <img data-seq=3- src=img/frp4.jpg>
+      <img data-seq=4 src=img/price-of-love.gif />
+      <img data-seq=4 class=other src=img/another-box.gif />
     </section>
 
     <section class="sigh-2">
@@ -745,6 +762,16 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
           # edit code, sigh will recompile and run tests as you do<br>
           <span data-blink=500>❯</span> npm publish<br>
         </div>
+      </div>
+    </section>
+
+    <section class="thanks">
+      <div data-markdown>
+        * # Maryam
+        * Mr. T
+        * [http://bubblegun.com](http://bubblegun.com)
+        * [http://www.yellow5.com/pokey/](Pokey the penguin)
+        * Storz-Bickel
       </div>
     </section>
   </body>
