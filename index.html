@@ -51,13 +51,13 @@
         * How to build code:
           * Task runner
           * Asset pipeline
-          * Build automation system
         * Good for anything that reacts to code changes
           * Transpile es6/coffee/typescript/scss.
           * Run tests after everything is built.
           * Create production version of code (minified etc.)
           * Talks to your browser via livereload.
           * Incrementally rebuild.
+        * Reactive development automation system
       </div>
     </section>
 
@@ -65,15 +65,15 @@
       <div data-markdown>
         # History
 
+        * "All your base are belong to us" - 1998
+        * "Don't tase me bro" - 2007
         * node 0.0.1 - May 2009.
         * CoffeeScript 0.1 - December 2009.
         * npm 0.0.1 - January 2010 (node at 0.1).
-          * ... and Simon Cowell leaves American Idol
         * jake 0.1.5 - August 2010.
-        * CoffeeScript 1.0 - December 2010.
         * npm 1.0.1 - April 2011 (node at 0.4)
-        * grunt 0.1.0 - January 2012.
-        * gulp 0.0.1 - July 2013, 1.0.0 - September.
+        * grunt 0.1.0 - January 2012. (& "Grumpy Grandma")
+        * gulp 0.0.1 - July 2013, 1.0.0 - September (& "Grumpy Cat").
         * traceur 0.0.10 - January 2014.
         * broccoli (first beta) - Feb 2014.
       </div>
@@ -119,7 +119,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         <img class=mr-t data-seq=1- alt="Mr. T" src=img/mr-t.png>
         <div data-seq=2 data-marquee=-90px:10px:5000 class=hey-suckah>
           Hey SUCKAH.
-          Remember kids this hat 'aint red.
+          Mr T 'aint WEARING no Red HAT SUCKAH.
           And don't you COME in to MY GARAGE
           at NIGHT and KICK over MY BINS.
         </div>
@@ -140,11 +140,15 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         module.exports = function(grunt) {
           grunt.initConfig({
             jshint: {
-              files: ['**/*.js'],
+              files: ['src/*.js'],
               options: JSON.parse(require('fs').readFileSync('./.jshintrc'))
-            }
+            },
+            mochaTest: {
+              files: ['test/*.spec.js']
+            },
           })
           grunt.loadNpmTasks('grunt-contrib-jshint')
+          grunt.loadNpmTasks('grunt-mocha-test')
         }
         ```
         <div class=console>
@@ -154,11 +158,12 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         ## npm
         ```javascript
         "scripts": {
-          "lint": "jshint **/*.js"
+          "lint": "jshint src/*.js",
+          "mocha": "mocha test/*.spec.js",
         }
         ```
         <div class=console>
-          <span data-blink=500>❯</span> npm lint
+          <span data-blink=500>❯</span> npm lint mocha
         </div>
       </div>
     </section>
@@ -405,7 +410,10 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         * Source maps rarely working.
           * Not working in previous example.
           * Many plugins lack transitive application.
-        * Use of filesystem means plugins must clean-up.
+        * Use of filesystem questionable:
+          * Plugins must clean-up.
+          * Infrastructure code more complicated, temp files etc.
+          * Filesystem is slow.
         * "No parallelism"
           * "Only a 40% speed gain."
           * Possible but "broccoli's primitives + helper code encourage deterministic sequential code patterns."
@@ -458,6 +466,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         ## Those without changes in 6+ months.
         * plumber
         * cha
+        * grunt
       </div>
     </section>
 
