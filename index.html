@@ -97,7 +97,15 @@
     <section class="Makefiles">
       <header>Makefile syntax</header>
       <div data-seq=1- class=console>
-        <span data-blink=500>❯</span> touch  <img alt="Mr. T" src=img/mr-t.png>
+        <div>
+          <span data-blink=500>❯</span> make  <img alt="Mr. T" src=img/pipe-bomb.png>
+        </div>
+        <div data-seq=2->
+          <span data-blink=500>❯</span> touch  <img alt="Mr. T" src=img/mr-t.png>
+        </div>
+        <div data-seq=4->
+          <span data-blink=500>❯</span> make  <img alt="Mr. T" src=img/pipe-bomb.png>
+        </div>
       </div>
       <div>
         <pre><code>
@@ -105,7 +113,7 @@
     @echo feeding lovely sad cat
     feed --animal $^
 
-<img alt="A-Team" src=img/a-team.png><span class=colon>:</span> <img alt="Mr. T" src=img/mr-t.png><span class=hey-suckah data-seq=2-3>Nobody INTERFERES
+<img alt="A-Team" src=img/a-team.png><span class=colon>:</span> <img alt="Mr. T" src=img/mr-t.png><span class=hey-suckah data-seq=3-4>Nobody INTERFERES
 with Mr T or Mr T's
 BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimus Prime" src=img/optimus-prime.png> <img alt="She Ra" src=img/she-ra.jpg>
     cat $^ > $@
@@ -119,8 +127,8 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
     <section class="jake">
       <header>
         <img class=jake src=img/jake.png>
-        <img class=mr-t data-seq=1- alt="Mr. T" src=img/mr-t.png>
-        <div data-seq=2 data-marquee=-90px:10px:5000 class=hey-suckah>
+        <img class=mr-t data-seq=1 alt="Mr. T" src=img/mr-t.png>
+        <div data-seq=1 data-marquee=-90px:10px:5000 class=hey-suckah>
           Hey SUCKAH.
           Mr T 'aint WEARING no Red HAT SUCKAH.
           And don't you COME in to MY GARAGE
@@ -170,7 +178,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
         }
         ```
         <div class=console>
-          <span data-blink=500>❯</span> npm build
+          <span data-blink=500>❯</span> npm run build
         </div>
       </div>
       <footer>
@@ -766,6 +774,7 @@ BINS SUCKAH</span> <img alt="Mr T's van" src=img/mr-ts-van.jpg> <img alt="Optimu
     </section>
 
     <section class="thanks">
+      <header data-blink>FIN</header>
       <div data-markdown>
         * # Maryam
         * Mr. T

@@ -126,15 +126,25 @@ section {
   100% {
     left: 200px; }
   0% {
-    opacity: 0; }
+    -webkit-transform: rotate(0deg); }
+  5% {
+    -webkit-transform: rotate(5deg); }
+  10% {
+    -webkit-transform: rotate(-5deg); }
+  15% {
+    -webkit-transform: rotate(7deg); }
   20% {
+    -webkit-transform: rotate(-7deg); }
+  0% {
+    opacity: 0.9; }
+  35% {
     opacity: 0.5; }
   40% {
-    opacity: 0; }
+    opacity: 0.1; }
   60% {
     opacity: 0.5; }
   80% {
-    opacity: 0; }
+    opacity: 0.9; }
   100% {
     opacity: 0.5; } }
 
@@ -167,12 +177,23 @@ section {
     position: absolute;
     min-width: 0%;
     top: 10px;
-    right: 200px; }
+    right: 80px; }
     .Makefiles .console img {
       margin-left: 10px; }
+    .Makefiles .console > div {
+      margin: 10px 0; }
   .Makefiles .hey-suckah {
     position: absolute;
     display: inline-block; }
+
+@-webkit-keyframes strange-colors {
+  0% {
+    -webkit-filter: hue-rotate(0deg); }
+  100% {
+    -webkit-filter: hue-rotate(200deg); } }
+
+section.jake img.mr-t {
+  -webkit-animation: strange-colors 0.2s infinite alternate; }
 
 section.jake .jake {
   height: 100px;
@@ -284,8 +305,11 @@ section.jake .hey-suckah {
   width: 100%;
   height: 200px; }
 
-.FRP [data-seq="4"].other {
-  top: 240px; }
+.FRP [data-seq="4"] {
+  top: 210px;
+  left: 20px; }
+  .FRP [data-seq="4"].other {
+    top: 450px; }
 
 .sigh-2 > div {
   position: relative;
@@ -309,4 +333,8 @@ section.jake .hey-suckah {
   line-height: 1em; }
   .sigh-6 .console {
     font-size: 70%; }
+
+.thanks header {
+  text-align: right;
+  font-size: 800%; }
 /*# sourceMappingURL=app.css.map */

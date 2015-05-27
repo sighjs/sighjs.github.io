@@ -156,7 +156,7 @@ define('init', ['exports', 'highlightjs', 'marked', 'lodash', './utils', './menu
     _marked2['default'].setOptions({
       highlight: function highlight(code) {
         // to avoid double escaping
-        code = code.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        code = code.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
         return _highlightjs2['default'].highlight('javascript', code).value;
       }
     });
