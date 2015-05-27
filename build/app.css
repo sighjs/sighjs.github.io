@@ -357,4 +357,14 @@ section.jake .hey-suckah {
 .thanks header {
   text-align: right;
   font-size: 800%; }
+  .thanks header img {
+    position: absolute; }
+    .thanks header img[alt="evil-power"] {
+      left: 0;
+      width: 800px; }
+    .thanks header img[alt="cam"] {
+      left: 324px;
+      top: 29px;
+      z-index: 3;
+      height: 166px; }
 /*# sourceMappingURL=app.css.map */
